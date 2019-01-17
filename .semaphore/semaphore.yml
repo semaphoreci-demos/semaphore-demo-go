@@ -1,5 +1,5 @@
 version: v1.0
-name: First pipeline example
+name: Go project
 agent:
   machine:
     type: e1-standard-2
@@ -20,44 +20,32 @@ blocks:
           - echo "Docker build..."
           - echo "done"
 
-  - name: "Smoke tests"
+  - name: Tests
     task:
       jobs:
-      - name: Smoke
+      - name: Test packages
         commands:
           - checkout
-          - echo "make smoke"
+          - echo "Testing Packages"
 
-  - name: "Unit tests"
+  - name: Integration Tests
     task:
       jobs:
       - name: RSpec
         commands:
           - checkout
-          - echo "make rspec"
-
-      - name: Lint code
-        commands:
-          - checkout
-          - echo "make lint"
+          - echo "Testing Integration"
 
       - name: Check security
         commands:
           - checkout
           - echo "make security"
 
-  - name: "Integration tests"
+  - name: Push Image to Docker Hub
     task:
       jobs:
-      - name: Cucumber
-        commands:
-          - checkout
-          - echo "make cucumber"
-
-  - name: "Push Image"
-    task:
-      jobs:
-      - name: Push
+      - name: Login and Push
         commands:
           - checkout
           - echo "make docker.push"
+
