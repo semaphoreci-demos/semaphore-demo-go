@@ -6,19 +6,13 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: "Build"
+  - name: Build project
     task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
       jobs:
       - name: Docker build
         commands:
           - checkout
-          - ls -1
-          - echo $APP_ENV
           - echo "Docker build..."
-          - echo "done"
 
   - name: Tests
     task:
@@ -26,7 +20,7 @@ blocks:
       - name: Test packages
         commands:
           - checkout
-          - echo "Testing Packages"
+          - echo "Testing Go Packages"
 
   - name: Integration Tests
     task:
@@ -47,5 +41,6 @@ blocks:
       - name: Login and Push
         commands:
           - checkout
-          - echo "make docker.push"
+          - echo "docker login"
+          - echo "docker push"
 
