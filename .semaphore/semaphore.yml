@@ -28,7 +28,9 @@ blocks:
           - cache restore $(checksum webServer.go)
           - ./bin/webServer 8001 &
           - wget -p localhost:8001 -O /tmp/test
+          - wget -p localhost:8001/time -O /tmp/testTime
           - cat /tmp/test
+          - cat /tmp/testTime
 
       - name: Test Postgres
         commands:
