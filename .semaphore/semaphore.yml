@@ -14,7 +14,10 @@ blocks:
           - checkout
           - go get github.com/lib/pq
           - sem-service start postgres
-          - echo "Build Go binary"
+          - go build webServer.go
+          - mkdir bin
+          - mv webServer bin
+          - cache store $(checksum webServer.go) bin
 
   - name: Unit Tests
     task:
@@ -22,7 +25,7 @@ blocks:
       - name: Test Web Server
         commands:
           - checkout
-          - echo "Restore from cache"
+          - cache restore $(checksum webServer.go)
           - echo "Testing Go Packages"
 
       - name: Test Postgres
@@ -39,7 +42,7 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres
-          - echo "Restore binary from cache"
+          - cache restore $(checksum webServer.go)
           - echo "Testing Integration"
 
   - name: Test application
@@ -49,6 +52,7 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres
+          - cache restore $(checksum webServer.go)
           - echo "Populate PostgreSQL"
           - echo "Restore from cache"
 
