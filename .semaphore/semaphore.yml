@@ -9,38 +9,46 @@ blocks:
   - name: Build project
     task:
       jobs:
-      - name: Docker build
+      - name: Get Go packages
         commands:
           - checkout
-          - echo "Docker build..."
+          - go get github.com/lib/pq
+          - sem-service start postgres
+          - echo "Build Go binary"
 
-  - name: Tests
+  - name: Unit Tests
     task:
       jobs:
-      - name: Test packages
+      - name: Test Web Server
         commands:
           - checkout
+          - echo "Restore from cache"
           - echo "Testing Go Packages"
+
+      - name: Test Postgres
+        commands:
+          - sem-service start postgres
+          - sleep 5
+          - psql -p 5432 -h localhost -U postgres -c "Select NOW()"
+
 
   - name: Integration Tests
     task:
       jobs:
-      - name: RSpec
+      - name: Web Server + DBMS
         commands:
           - checkout
+          - sem-service start postgres
+          - echo "Restore binary from cache"
           - echo "Testing Integration"
 
-      - name: Check security
-        commands:
-          - checkout
-          - echo "make security"
-
-  - name: Push Image to Docker Hub
+  - name: Test application
     task:
       jobs:
-      - name: Login and Push
+      - name: Interact with application
         commands:
           - checkout
-          - echo "docker login"
-          - echo "docker push"
+          - sem-service start postgres
+          - echo "Populate PostgreSQL"
+          - echo "Restore from cache"
 
