@@ -19,6 +19,14 @@ blocks:
           - mv webServer bin
           - cache store $(checksum webServer.go) bin
 
+  - name: Check code stype
+    task:
+      jobs:
+      - name: gofmt
+        commands:
+          - checkout
+          - gofmt webServer.go | diff webServer.go -
+
   - name: Unit Tests
     task:
       jobs:
