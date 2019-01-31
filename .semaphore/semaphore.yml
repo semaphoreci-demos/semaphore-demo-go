@@ -25,6 +25,7 @@ blocks:
       - name: gofmt
         commands:
           - checkout
+          - sudo apt install gccgo-go
           - gofmt webServer.go | diff webServer.go -
 
   - name: Unit Tests
