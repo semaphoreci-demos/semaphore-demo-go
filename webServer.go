@@ -27,7 +27,7 @@ func getData(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Serving: %s\n", r.URL.Path)
 	fmt.Printf("Served: %s\n", r.Host)
 
-	connStr := "user=postgres dbname=s2"
+	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
