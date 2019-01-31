@@ -33,9 +33,10 @@ func getData(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
 		return
 	}
+
 	rows, err := db.Query("SELECT * FROM users")
 	if err != nil {
-		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>\n", err)
 		return
 	}
 	defer rows.Close()
