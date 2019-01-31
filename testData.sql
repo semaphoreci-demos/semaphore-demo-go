@@ -5,9 +5,9 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (first_name, last_name)
-VALUES ('Jonathan', 'Calhoun');
+VALUES ('Mihalis', 'Tsoukalos');
 INSERT INTO users (first_name, last_name)
-VALUES ('Bob', 'Smith');
+VALUES ('Darko', 'Fabijan');
 INSERT INTO users (first_name, last_name)
-VALUES ('Jerry', 'Seinfeld');
+VALUES ('Marko', 'Anastasov');
 
