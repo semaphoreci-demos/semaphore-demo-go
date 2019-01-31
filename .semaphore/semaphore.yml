@@ -26,7 +26,7 @@ blocks:
         commands:
           - checkout
           - yes | sudo apt install gccgo-go
-          - gofmt webServer.go | diff webServer.go -
+          - gofmt webServer.go | diff --ignore-tab-expansion webServer.go -
 
   - name: Unit Tests
     task:
