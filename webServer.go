@@ -67,8 +67,8 @@ func main() {
 	}
 	fmt.Println("Using port number: ", PORT)
 	http.HandleFunc("/time", timeHandler)
-	http.HandleFunc("/", myHandler)
 	http.HandleFunc("/getdata", getData)
+	http.HandleFunc("/", myHandler)
 
 	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
