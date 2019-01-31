@@ -36,7 +36,7 @@ func getData(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query("SELECT * FROM users")
 	if err != nil {
-		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>\n", err)
+		fmt.Fprintf(w, "<h3 align=\"center\">%s</h3>\n", err)
 		return
 	}
 	defer rows.Close()
@@ -50,7 +50,7 @@ func getData(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>\n", err)
 			return
 		}
-		fmt.Fprintf(w, "<h3 align=\"center\">%d, %s, %s</h3>", id, firstName, lastName)
+		fmt.Fprintf(w, "<h3 align=\"center\">%d, %s, %s</h3>\n", id, firstName, lastName)
 	}
 
 	err = rows.Err()
