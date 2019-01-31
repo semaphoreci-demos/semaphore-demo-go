@@ -47,7 +47,7 @@ func getData(w http.ResponseWriter, r *http.Request) {
 		var lastName string
 		err = rows.Scan(&id, &firstName, &lastName)
 		if err != nil {
-			fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+			fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>\n", err)
 			return
 		}
 		fmt.Fprintf(w, "<h3 align=\"center\">%d, %s, %s</h3>", id, firstName, lastName)
