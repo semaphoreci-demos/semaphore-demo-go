@@ -55,7 +55,11 @@ blocks:
           - checkout
           - sem-service start postgres
           - cache restore $(checksum webServer.go)
-          - echo "Testing Integration"
+          - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
+          - psql -h localhost -d s2 -U postgres -f testData.sql
+          - ./webServer
+          - wget -p localhost:8001/getData -O /tmp/getTestData
+          - cat /tmp/getTestData
 
   - name: Test application
     task:
@@ -65,6 +69,8 @@ blocks:
           - checkout
           - sem-service start postgres
           - cache restore $(checksum webServer.go)
-          - echo "Populate PostgreSQL"
-          - echo "Restore from cache"
+          - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
+          - psql -h localhost -d s2 -U postgres -f data.sql
+          - wget -p localhost:8001/getData -O /tmp/getData
+          - cat /tmp/getData
 

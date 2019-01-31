@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"database/sql"
+	_ "github.com/lib/pq"
 )
 
 func myHandler(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +27,12 @@ func getData(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Serving: %s\n", r.URL.Path)
 	fmt.Printf("Served: %s\n", r.Host)
 
+	connStr := "user=postgres dbname=s2 sslmode=verify-full"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+    nRows, err := db.Query("SELECT * FROM users")
 }
 
 func main() {
