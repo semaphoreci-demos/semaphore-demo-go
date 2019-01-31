@@ -72,6 +72,6 @@ blocks:
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - psql -h localhost -d s2 -U postgres -f data.sql
           - ./bin/webServer 8001 &
-          - wget -p localhost:8001/getData -O /tmp/getdata
+          - wget -p localhost:8001/getdata -O /tmp/getData
           - cat /tmp/getData
 
