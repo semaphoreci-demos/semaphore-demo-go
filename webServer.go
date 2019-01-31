@@ -1,12 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	_ "github.com/lib/pq"
 	"net/http"
 	"os"
 	"time"
-	"database/sql"
-	_ "github.com/lib/pq"
 )
 
 func myHandler(w http.ResponseWriter, r *http.Request) {
@@ -30,9 +30,33 @@ func getData(w http.ResponseWriter, r *http.Request) {
 	connStr := "user=postgres dbname=s2 sslmode=verify-full"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+		return
 	}
-    nRows, err := db.Query("SELECT * FROM users")
+	rows, err := db.Query("SELECT * FROM users")
+	if err != nil {
+		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var id int
+		var firstName string
+		var lastName string
+		err = rows.Scan(&id, &firstName, &lastName)
+		if err != nil {
+			fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+			return
+		}
+		fmt.Fprintf(w, "<h3 align=\"center\">%d, %s, %s</h3>", id, firstName, lastName)
+	}
+
+	err = rows.Err()
+	if err != nil {
+		fmt.Fprintf(w, "<h1 align=\"center\">%s</h1>", err)
+		return
+	}
 }
 
 func main() {
