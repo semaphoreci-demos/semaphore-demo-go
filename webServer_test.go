@@ -1,2 +1,2 @@
-package webServer
+package main
 
