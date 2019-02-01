@@ -67,6 +67,7 @@ blocks:
       - name: go test
         commands:
           - checkout
+          - go get github.com/lib/pq
           - go test
 
   - name: Test application
