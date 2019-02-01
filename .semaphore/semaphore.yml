@@ -61,6 +61,14 @@ blocks:
           - wget -p localhost:8001/getdata -O /tmp/getTestData
           - cat /tmp/getTestData
 
+  - name: Automated tests
+    task:
+      jobs:
+      - name: go test
+        commands:
+          - checkout
+          - go test
+
   - name: Test application
     task:
       jobs:
