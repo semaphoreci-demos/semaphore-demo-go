@@ -91,6 +91,36 @@ func Test_count(t *testing.T) {
 func Test_queryDB(t *testing.T) {
 	create_table()
 
+	connStr := "user=postgres dbname=s2 sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	query := "INSERT INTO users (first_name, last_name) VALUES ('Random Text', '123456')"
+	insert_record(query)
+
+	rows, err := db.Query(`SELECT * FROM users WHERE last_name=$1`, `123456`)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var col1 int
+	var col2 string
+	var col3 string
+	for rows.Next() {
+		rows.Scan(&col1, &col2, &col3)
+	}
+	if col2 != "Random Text" {
+		t.Errorf("first_name returned %s", col2)
+	}
+
+	if col3 != "123456" {
+		t.Errorf("last_name returned %s", col3)
+	}
+
+	db.Close()
 	drop_table()
 }
 

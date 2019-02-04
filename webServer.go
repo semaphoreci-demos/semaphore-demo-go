@@ -24,7 +24,7 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getData(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf(w, "Serving: %s\n", r.URL.Path)
+	fmt.Printf("Serving: %s\n", r.URL.Path)
 	fmt.Printf("Served: %s\n", r.Host)
 
 	connStr := "user=postgres dbname=s2 sslmode=disable"
