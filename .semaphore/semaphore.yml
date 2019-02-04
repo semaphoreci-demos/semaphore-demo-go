@@ -67,6 +67,7 @@ blocks:
       - name: go test
         commands:
           - checkout
+          - sem-service start postgres
           - go get github.com/lib/pq
           - go test webServer.go webServer_test.go
 
