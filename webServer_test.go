@@ -82,7 +82,6 @@ func Test_count(t *testing.T) {
 	err = row.Scan(&count)
 	db.Close()
 
-	fmt.Println(count)
 	if count != 3 {
 		t.Errorf("Select query returned %d", count)
 	}
@@ -113,8 +112,8 @@ func Test_record(t *testing.T) {
 		t.Errorf("Handler returned %v", status)
 	}
 
-	fmt.Println("Server response:", rr.Body.String())
-
-	fmt.Println(req)
+	if rr.Body.String() != "<h3 align=\"center\">1, John, Doe</h3>\n" {
+		t.Errorf("Wrong server response!")
+	}
 	drop_table()
 }
