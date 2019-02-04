@@ -68,7 +68,7 @@ blocks:
         commands:
           - checkout
           - go get github.com/lib/pq
-          - go test
+          - go test webServer.go webServer_test.go
 
   - name: Test application
     task:
