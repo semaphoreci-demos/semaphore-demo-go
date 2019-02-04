@@ -16,6 +16,12 @@ func create_table() {
 		fmt.Println(err)
 	}
 
+	_, err = db.Exec("CREATE DATABASE IF EXISTS s2")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	const query = `
 		CREATE TABLE IF NOT EXISTS users (
 		  id SERIAL PRIMARY KEY,
@@ -38,8 +44,13 @@ func drop_table() {
 		fmt.Println(err)
 		return
 	}
-
 	_, err = db.Exec("DROP TABLE IF EXISTS users")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	_, err = db.Exec("DROP DATABASE IF EXISTS s2")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -55,7 +66,6 @@ func insert_record(query string) {
 		fmt.Println(err)
 		return
 	}
-
 	_, err = db.Exec(query)
 	if err != nil {
 		fmt.Println(err)
