@@ -22,12 +22,12 @@ func create_table() {
 		  first_name TEXT,
 		  last_name TEXT
 	)`
+
 	_, err = db.Exec(query)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 	db.Close()
 }
 
@@ -38,12 +38,12 @@ func drop_table() {
 		fmt.Println(err)
 		return
 	}
+
 	_, err = db.Exec("DROP TABLE IF EXISTS users")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 	db.Close()
 }
 
@@ -59,7 +59,6 @@ func insert_record(query string) {
 		fmt.Println(err)
 		return
 	}
-
 	db.Close()
 }
 
@@ -147,3 +146,4 @@ func Test_record(t *testing.T) {
 	}
 	drop_table()
 }
+
