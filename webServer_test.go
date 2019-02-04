@@ -16,7 +16,7 @@ func create_table() {
 		fmt.Println(err)
 	}
 
-	_, err = db.Exec("CREATE DATABASE IF EXISTS s2")
+	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS s2")
 	if err != nil {
 		fmt.Println(err)
 		return
