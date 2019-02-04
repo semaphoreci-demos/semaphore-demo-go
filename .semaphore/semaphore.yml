@@ -68,6 +68,7 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres
+          - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
           - go test webServer.go webServer_test.go
 
