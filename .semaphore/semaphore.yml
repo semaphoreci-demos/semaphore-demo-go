@@ -36,10 +36,8 @@ blocks:
           - checkout
           - cache restore $(checksum webServer.go)
           - ./bin/webServer 8001 &
-          - wget -p localhost:8001 -O /tmp/test
-          - wget -p localhost:8001/time -O /tmp/testTime
-          - cat /tmp/test
-          - cat /tmp/testTime
+          - wget -p localhost:8001 -O /dev/null
+          - wget -p localhost:8001/time -O /dev/null
 
   - name: Integration Tests
     task:
@@ -52,8 +50,7 @@ blocks:
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - psql -h localhost -d s2 -U postgres -f testData.sql
           - ./bin/webServer 8001 &
-          - wget -p localhost:8001/getdata -O /tmp/getTestData
-          - cat /tmp/getTestData
+          - wget -p localhost:8001/getdata -O /dev/null
 
   - name: Automated tests
     task:
@@ -77,6 +74,5 @@ blocks:
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - psql -h localhost -d s2 -U postgres -f data.sql
           - ./bin/webServer 8001 &
-          - wget -p localhost:8001/getdata -O /tmp/getData
-          - cat /tmp/getData
+          - wget -p localhost:8001/getdata -O /dev/null
 
