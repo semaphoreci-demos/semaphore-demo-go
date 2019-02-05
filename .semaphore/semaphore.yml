@@ -41,11 +41,6 @@ blocks:
           - cat /tmp/test
           - cat /tmp/testTime
 
-      - name: Test Postgres
-        commands:
-          - sem-service start postgres
-          - psql -p 5432 -h localhost -U postgres -c "Select NOW()"
-
   - name: Integration Tests
     task:
       jobs:
