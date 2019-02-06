@@ -61,7 +61,7 @@ blocks:
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
-          - go test main/... -v
+          - go test ./... -v
 
       - name: Test coverage
         commands:
@@ -69,7 +69,7 @@ blocks:
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
-          - go test main -cover
+          - go test . -cover
 
   - name: Test application
     task:
