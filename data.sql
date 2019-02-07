@@ -14,4 +14,3 @@ INSERT INTO users (first_name, last_name)
 VALUES ('Marko', 'Anastasov');
 INSERT INTO users (first_name, last_name)
 VALUES ('Filip', 'Brdaric');
-
