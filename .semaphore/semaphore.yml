@@ -39,19 +39,6 @@ blocks:
           - wget -p localhost:8001 -O /dev/null
           - wget -p localhost:8001/time -O /dev/null
 
-  - name: Integration Tests
-    task:
-      jobs:
-      - name: Web Server + DBMS
-        commands:
-          - checkout
-          - sem-service start postgres
-          - cache restore $(checksum webServer.go)
-          - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
-          - psql -h localhost -d s2 -U postgres -f testData.sql
-          - ./bin/webServer 8001 &
-          - wget -p localhost:8001/getdata -O /dev/null
-
   - name: Automated tests
     task:
       jobs:
