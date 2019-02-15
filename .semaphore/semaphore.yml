@@ -50,7 +50,7 @@ blocks:
           - go get github.com/lib/pq
           - go test ./... -v
 
-      - name: Test coverage
+      - name: Test code coverage
         commands:
           - checkout
           - sem-service start postgres
