@@ -1,5 +1,5 @@
 version: v1.0
-name: Go project
+name: Semaphore Go CI example
 agent:
   machine:
     type: e1-standard-2
@@ -9,7 +9,7 @@ blocks:
   - name: Build project
     task:
       jobs:
-      - name: Get Go packages
+      - name: go get & build
         commands:
           - checkout
           - sem-version go 1.12
@@ -26,25 +26,25 @@ blocks:
         commands:
           - checkout
           - sem-version go 1.12
-          - yes | sudo apt install gccgo-go
+          - sudo apt install -y gccgo-go
           - gofmt webServer.go | diff --ignore-tab-expansion webServer.go -
 
-  - name: Smoke tests
+  - name: Run tests
     task:
-      jobs:
-      - name: go test
+      prologue:
         commands:
           - checkout
           - sem-version go 1.12
+      jobs:
+      - name: go test
+        commands:
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
           - go test ./... -v
 
-      - name: Test Web Server
+      - name: Test web server
         commands:
-          - checkout
-          - sem-version go 1.12
           - cache restore $(checksum webServer.go)
           - ./bin/webServer 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
