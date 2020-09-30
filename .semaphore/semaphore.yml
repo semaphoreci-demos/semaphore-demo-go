@@ -78,7 +78,7 @@ blocks:
         commands:
           # Restore compiled binary which we created in the first block:
           - mkdir bin
-          - artifact pull workflow webServer
+          - artifact pull workflow bin/webServer
           - mv webServer bin
           - ./bin/webServer 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
