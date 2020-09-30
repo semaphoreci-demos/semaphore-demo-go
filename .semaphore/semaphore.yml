@@ -41,7 +41,7 @@ blocks:
           # More about caching: https://docs.semaphoreci.com/article/54-toolbox-reference#cache
           - mkdir bin
           - mv webServer bin
-          - cache store $(checksum webServer.go) bin
+          - artifact push workflow bin
 
   - name: Check code style
     task:
@@ -77,7 +77,7 @@ blocks:
       - name: Test web server
         commands:
           # Restore compiled binary which we created in the first block:
-          - cache restore $(checksum webServer.go)
+          - artifact pull workflow bin
           - ./bin/webServer 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
 
