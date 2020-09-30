@@ -37,11 +37,9 @@ blocks:
           - go get github.com/lib/pq
           - go build webServer.go
 
-          # Store the binary in cache to reuse in further blocks.
-          # More about caching: https://docs.semaphoreci.com/article/54-toolbox-reference#cache
-          - mkdir bin
-          - mv webServer bin
-          - artifact push workflow bin
+          # Store the binary as artifact to reuse in further blocks.
+          # More about caching: https://docs.semaphoreci.com/essentials/artifacts/
+          - artifact push workflow webServer --force
 
   - name: Check code style
     task:
@@ -78,8 +76,9 @@ blocks:
         commands:
           # Restore compiled binary which we created in the first block:
           - mkdir bin
-          - artifact pull workflow bin/webServer
+          - artifact pull workflow webServer
           - mv webServer bin
+          - chmod +x ./bin/webServer
           - ./bin/webServer 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
 
