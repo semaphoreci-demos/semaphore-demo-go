@@ -68,7 +68,7 @@ blocks:
       - name: go test
         commands:
           # Start Postgres database service.
-          # See https://docs.semaphoreci.com/article/54-toolbox-reference#sem-service
+          # See https://docs.semaphoreci.com/ci-cd-environment/sem-service-managing-databases-and-services-on-linux/
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
