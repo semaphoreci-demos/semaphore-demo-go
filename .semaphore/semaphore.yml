@@ -64,6 +64,9 @@ blocks:
         commands:
           - checkout
           - sem-version go 1.12
+          - mkdir /home/sempahore/go
+          - export GOPATH="/home/sempahore/go/"
+          - export PATH="$PATH:$GOPATH/bin"
       jobs:
       - name: go test
         commands:
@@ -72,7 +75,9 @@ blocks:
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get github.com/lib/pq
-          - go test ./... -v
+          # Download test runner that supports junit xml generation
+          - GO111MODULE=off go get gotest.tools/gotestsum
+          - gotestsum --junitfile /tmp/junit.xml ./... -v
 
       - name: Test web server
         commands:
@@ -80,4 +85,8 @@ blocks:
           - cache restore $(checksum webServer.go)
           - ./bin/webServer 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
+      epilogue:
+        always:
+          commands:
+            - test-results publish /tmp/junit.xml
 
