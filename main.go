@@ -3,10 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/lib/pq"
 )
 
 func myHandler(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +68,7 @@ func main() {
 		PORT = ":" + arguments[1]
 	}
 	fmt.Println("Using port number: ", PORT)
+
 	http.HandleFunc("/time", timeHandler)
 	http.HandleFunc("/getdata", getData)
 	http.HandleFunc("/", myHandler)
