@@ -60,15 +60,18 @@ blocks:
         commands:
           - checkout
           - sem-version go 1.16
+          - export "SEMAPHORE_GIT_DIR=$(go env GOPATH)/src/github.com/${SEMAPHORE_PROJECT_NAME}"
+          - export "PATH=$(go env GOPATH)/bin:${PATH}"
+          - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
       jobs:
       - name: go test
         commands:
           # Start Postgres database service.
           # See https://docs.semaphoreci.com/ci-cd-environment/sem-service-managing-databases-and-services-on-linux/
           - sem-service start postgres
-          - go get gotest.tools/gotestsum
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
-          - gotestsum ./... -v
+          - go get gotest.tools/gotestsum
+          - gotestsum --junitfile /tmp/junit.xml ./...
 
       - name: Test web server
         commands:
