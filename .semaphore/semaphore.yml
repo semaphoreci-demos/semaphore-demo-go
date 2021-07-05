@@ -71,7 +71,7 @@ blocks:
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
           - go get gotest.tools/gotestsum
-          - gotestsum --junitfile /tmp/junit.xml ./...
+          - gotestsum --junitfile junit.xml ./...
 
       - name: Test web server
         commands:
@@ -82,5 +82,5 @@ blocks:
       epilogue:
         always:
           commands:
-            - test-results publish /tmp/junit.xml
+            - test-results publish junit.xml
 

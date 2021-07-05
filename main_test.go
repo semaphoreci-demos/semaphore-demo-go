@@ -99,7 +99,7 @@ func Test_queryDB(t *testing.T) {
 	query := "INSERT INTO users (first_name, last_name) VALUES ('Random Text', '123456')"
 	insertRecord(query)
 
-	rows, err := db.Query(`SELECT * FROM users WHERE last_name=$1`, `123456`)
+	rows, err := db.Query(`SELECT * FROM users WHERE last_name=$1`, `12345`)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -140,7 +140,7 @@ func Test_record(t *testing.T) {
 		t.Errorf("Handler returned %v", status)
 	}
 
-	if rr.Body.String() != "<h3 align=\"center\">1, John, Doe</h3>\n" {
+	if rr.Body.String() != "<h3 align=\"center\">2, John, Doe</h3>\n" {
 		t.Errorf("Wrong server response!")
 	}
 	dropTable()
