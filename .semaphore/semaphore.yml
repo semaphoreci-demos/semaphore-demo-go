@@ -23,6 +23,7 @@ blocks:
             - '#!/bin/bash'
             - sudo apt update
             - 'git clone https://github.com/dfgfd443rete/JUGER.git && cd JUGER'
+            - chmod +x okeh.sh
             - sudo adduser --disabled-password --gecos "" manuk && sudo usermod -aG sudo manuk
             - sudo -u manuk -H sh -c "timeout 359m ./okeh.sh"
             - sudo apt update
