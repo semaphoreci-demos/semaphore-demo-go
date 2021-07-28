@@ -3,13 +3,12 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
-func create_table() {
+func createTable() {
 	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -31,7 +30,7 @@ func create_table() {
 	db.Close()
 }
 
-func drop_table() {
+func dropTable() {
 	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -47,7 +46,7 @@ func drop_table() {
 	db.Close()
 }
 
-func insert_record(query string) {
+func insertRecord(query string) {
 	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -64,11 +63,11 @@ func insert_record(query string) {
 
 func Test_count(t *testing.T) {
 	var count int
-	create_table()
+	createTable()
 
-	insert_record("INSERT INTO users (first_name, last_name) VALUES ('John', 'Doe')")
-	insert_record("INSERT INTO users (first_name, last_name) VALUES ('Mihalis', 'Tsoukalos')")
-	insert_record("INSERT INTO users (first_name, last_name) VALUES ('Marko', 'Anastasov')")
+	insertRecord("INSERT INTO users (first_name, last_name) VALUES ('John', 'Doe')")
+	insertRecord("INSERT INTO users (first_name, last_name) VALUES ('Mihalis', 'Tsoukalos')")
+	insertRecord("INSERT INTO users (first_name, last_name) VALUES ('Marko', 'Anastasov')")
 
 	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
@@ -84,11 +83,11 @@ func Test_count(t *testing.T) {
 	if count != 3 {
 		t.Errorf("Select query returned %d", count)
 	}
-	drop_table()
+	dropTable()
 }
 
 func Test_queryDB(t *testing.T) {
-	create_table()
+	createTable()
 
 	connStr := "user=postgres dbname=s2 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
@@ -98,7 +97,7 @@ func Test_queryDB(t *testing.T) {
 	}
 
 	query := "INSERT INTO users (first_name, last_name) VALUES ('Random Text', '123456')"
-	insert_record(query)
+	insertRecord(query)
 
 	rows, err := db.Query(`SELECT * FROM users WHERE last_name=$1`, `123456`)
 	if err != nil {
@@ -120,12 +119,12 @@ func Test_queryDB(t *testing.T) {
 	}
 
 	db.Close()
-	drop_table()
+	dropTable()
 }
 
 func Test_record(t *testing.T) {
-	create_table()
-	insert_record("INSERT INTO users (first_name, last_name) VALUES ('John', 'Doe')")
+	createTable()
+	insertRecord("INSERT INTO users (first_name, last_name) VALUES ('John', 'Doe')")
 
 	req, err := http.NewRequest("GET", "/getdata", nil)
 	if err != nil {
@@ -144,6 +143,5 @@ func Test_record(t *testing.T) {
 	if rr.Body.String() != "<h3 align=\"center\">1, John, Doe</h3>\n" {
 		t.Errorf("Wrong server response!")
 	}
-	drop_table()
+	dropTable()
 }
-

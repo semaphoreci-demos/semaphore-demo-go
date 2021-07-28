@@ -31,15 +31,13 @@ blocks:
           - checkout
 
           # Set version of Go:
-          - sem-version go 1.12
+          - sem-version go 1.16
+          - go get
+          - go build -o ./bin/main
 
-          # Download dependencies and build the project:
-          - go get github.com/lib/pq
-          - go build webServer.go
-
-          # Store the binary as artifact to reuse in further blocks.
-          # More about caching: https://docs.semaphoreci.com/essentials/artifacts/
-          - artifact push workflow webServer --force
+          # Store the binary in cache to reuse in further blocks.
+          # More about caching: https://docs.semaphoreci.com/article/54-toolbox-reference#cache
+          - cache store $(checksum main.go) bin
 
   - name: Check code style
     task:
@@ -49,9 +47,9 @@ blocks:
           # Each job on Semaphore starts from a clean environment, so we
           # repeat the required project setup.
           - checkout
-          - sem-version go 1.12
+          - sem-version go 1.16
           - sudo apt install -y gccgo-go
-          - gofmt webServer.go | diff --ignore-tab-expansion webServer.go -
+          - gofmt main.go | diff --ignore-tab-expansion main.go -
 
   - name: Run tests
     task:
@@ -61,24 +59,25 @@ blocks:
       prologue:
         commands:
           - checkout
-          - sem-version go 1.12
+          - sem-version go 1.16
       jobs:
       - name: go test
         commands:
           # Start Postgres database service.
-          # See https://docs.semaphoreci.com/article/54-toolbox-reference#sem-service
+          # See https://docs.semaphoreci.com/ci-cd-environment/sem-service-managing-databases-and-services-on-linux/
           - sem-service start postgres
           - psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"
-          - go get github.com/lib/pq
-          - go test ./... -v
+          - go get gotest.tools/gotestsum
+          - gotestsum --junitfile junit.xml ./...
 
       - name: Test web server
         commands:
           # Restore compiled binary which we created in the first block:
-          - mkdir bin
-          - artifact pull workflow webServer
-          - mv webServer bin
-          - chmod +x ./bin/webServer
-          - ./bin/webServer 8001 &
+          - cache restore $(checksum main.go)
+          - ./bin/main 8001 &
           - curl --silent localhost:8001/time | grep "The current time is"
+      epilogue:
+        always:
+          commands:
+            - test-results publish junit.xml
 
