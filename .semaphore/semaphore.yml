@@ -81,3 +81,9 @@ blocks:
           commands:
             - test-results publish junit.xml
 
+after_pipeline:
+  task:
+    jobs:
+      - name: Publish Results
+        commands:
+          - test-results gen-pipeline-report
