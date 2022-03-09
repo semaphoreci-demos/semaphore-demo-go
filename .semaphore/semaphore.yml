@@ -48,7 +48,6 @@ blocks:
           # repeat the required project setup.
           - checkout
           - sem-version go 1.16
-          - sudo apt install -y gccgo-go
           - gofmt main.go | diff --ignore-tab-expansion main.go -
 
   - name: Run tests
