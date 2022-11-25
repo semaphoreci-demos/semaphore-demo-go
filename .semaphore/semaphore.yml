@@ -11,7 +11,7 @@ blocks:
         - name: go get & build
           commands:
             - checkout
-            - sem-version go 1.162
+            - sem-version go 1.16
             - go get
             - go build -o ./bin/main
             - cache store $(checksum main.go) bin
@@ -51,3 +51,10 @@ after_pipeline:
       - name: Publish Results
         commands:
           - test-results gen-pipeline-report
+promotions:
+  - name: Production
+    pipeline_file: deploy.yml
+    deployment_target: prod
+  - name: Development
+    pipeline_file: deploy.yml
+    deployment_target: dev
