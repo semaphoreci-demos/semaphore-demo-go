@@ -1,28 +1,25 @@
-# Semaphore demo CI pipeline using Go
+# Semaphore Continuous Integration Golang demo
 
-This is an example program and CI pipeline showing how to run a Go project on
-Semaphore 2.0.
+[![Build Status](https://semaphore-demos.semaphoreci.com/badges/semaphore-demo-go/branches/master.svg)](https://semaphore-demos.semaphoreci.com/projects/semaphore-demo-go)
+
+This is an example program and CI pipeline showing how to run a Go project on [Semaphore](https://semaphoreci.com)
 
 ## CI on Semaphore
 
-Feel free to fork this repository and use it to [create a
-Semaphore project][create-project].
+Feel free to fork this repository and use it to [create a Semaphore project][create-project].
 
-The CI pipeline is defined in `.semaphore/semaphore.yml` and when you run it it
-will look like this:
+The CI pipeline is defined in `.semaphore/semaphore.yml` and when you run it it will look like this:
 
-![CI pipeline on Semaphore](public/ci-pipeline.png)
+![CI pipeline on Semaphore](.semaphore/ci-pipeline.png)
 
-You can extend the pipeline with deployment by implementing a
-[promotion][promotions].  Refer to Semaphore documentation for additional
-[deployment examples][deployment-examples].
+You can extend the pipeline with deployment by implementing a [promotion][promotions].  Refer to Semaphore documentation for additional [deployment examples][deployment-examples].
 
 ## License
 
-Copyright (c) 2019 Rendered Text
+Copyright (c) 2022 Rendered Text
 
 Distributed under the MIT License. See the file LICENSE.
 
-[create-project]: https://docs.semaphoreci.com/article/63-your-first-project
-[promotions]: https://docs.semaphoreci.com/article/67-deploying-with-promotions
-[deployment-examples]: https://docs.semaphoreci.com/article/123-tutorials-and-example-projects#deployment
+[create-project]: https://docs.semaphoreci.com/guided-tour/getting-started/
+[promotions]: https://docs.semaphoreci.com/essentials/deploying-with-promotions/
+[deployment-examples]: https://docs.semaphoreci.com/examples/tutorials-and-example-projects/#deployment
