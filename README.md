@@ -20,6 +20,6 @@ Copyright (c) 2022 Rendered Text
 
 Distributed under the MIT License. See the file LICENSE.
 
-[create-project]: https://docs.semaphoreci.com/article/63-your-first-project
-[promotions]: https://docs.semaphoreci.com/article/67-deploying-with-promotions
-[deployment-examples]: https://docs.semaphoreci.com/article/123-tutorials-and-example-projects#deployment
+[create-project]: https://docs.semaphoreci.com/guided-tour/getting-started/
+[promotions]: https://docs.semaphoreci.com/essentials/deploying-with-promotions/
+[deployment-examples]: https://docs.semaphoreci.com/examples/tutorials-and-example-projects/#deployment
