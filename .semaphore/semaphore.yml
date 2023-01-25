@@ -10,4 +10,4 @@ blocks:
       jobs:
         - name: go get & build
           command_file: shell_main
-          commands: []
+
