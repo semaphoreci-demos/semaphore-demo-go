@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"math/rand"
+	"time"
 )
 
 func createTable() {
@@ -144,4 +146,12 @@ func Test_record(t *testing.T) {
 		t.Errorf("Wrong server response!")
 	}
 	dropTable()
+}
+
+func TestAPI(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	IsFlaky := rand.Intn(2) == 0
+	if !IsFlaky() {
+		t.Error("Test failed, this is a flaky test!")
+	}
 }
