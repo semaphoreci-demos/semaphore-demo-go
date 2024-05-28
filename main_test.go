@@ -151,7 +151,7 @@ func Test_record(t *testing.T) {
 func TestAPI(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	IsFlaky := rand.Intn(2) == 0
-	if !IsFlaky() {
+	if !IsFlaky {
 		t.Error("Test failed, this is a flaky test!")
 	}
 }
