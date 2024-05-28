@@ -152,6 +152,6 @@ func TestAPI(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	IsFlaky := rand.Intn(2) == 0
 	if !IsFlaky {
-		t.Error("Test failed, this is a flaky test!")
+		t.Error("API Test failed. Reason: timeout")
 	}
 }
