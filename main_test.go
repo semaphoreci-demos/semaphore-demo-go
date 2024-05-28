@@ -155,3 +155,11 @@ func TestAPI(t *testing.T) {
 		t.Error("API Test failed. Reason: timeout")
 	}
 }
+
+func TestFeatureA(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	IsFlaky := rand.Intn(2) == 0
+	if !IsFlaky {
+		t.Error("FeatureA failed. Reason: resource not ready")
+	}
+}
