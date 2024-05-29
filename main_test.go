@@ -163,3 +163,11 @@ func TestFeatureA(t *testing.T) {
 		t.Error("FeatureA failed. Reason: resource not ready")
 	}
 }
+
+func TestFeatureB(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	IsFlaky := rand.Intn(2) == 0
+	if !IsFlaky {
+		t.Error("FeatureB failed. Reason: connection failed")
+	}
+}
