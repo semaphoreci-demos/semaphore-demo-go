@@ -31,7 +31,7 @@ blocks:
           - checkout
 
           # Set version of Go:
-          - sem-version go 1.22
+          - sem-version go 1.21
           - go get
           - go build -o ./bin/main
 
@@ -47,7 +47,7 @@ blocks:
           # Each job on Semaphore starts from a clean environment, so we
           # repeat the required project setup.
           - checkout
-          - sem-version go 1.22
+          - sem-version go 1.21
           - gofmt main.go | diff --ignore-tab-expansion main.go -
 
   - name: Run tests
@@ -58,7 +58,7 @@ blocks:
       prologue:
         commands:
           - checkout
-          - sem-version go 1.22
+          - sem-version go 1.21
       jobs:
       - name: go test
         commands:
