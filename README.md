@@ -16,7 +16,7 @@ You can extend the pipeline with deployment by implementing a [promotion][promot
 
 ## Building the project
 
-The project has been tested with Go 1.19. After cloning the repository:
+The project has been tested with Go 1.21. After cloning the repository:
 
 ```bash
 $ go get
@@ -36,7 +36,7 @@ To run the tests on you machine:
 
 ## License
 
-Copyright (c) 2022 Rendered Text
+Copyright (c) 2024 Semaphore Technologies
 
 Distributed under the MIT License. See the file LICENSE.
 
