@@ -39,7 +39,7 @@ blocks:
           # More about caching: https://docs.semaphoreci.com/article/54-toolbox-reference#cache
           - cache store $(checksum main.go) bin
 
-  - name: Check code style
+  - name: Check code style and coverage
     task:
       jobs:
       - name: gofmt
@@ -49,6 +49,19 @@ blocks:
           - checkout
           - sem-version go 1.21
           - gofmt main.go | diff --ignore-tab-expansion main.go -
+      - name: coverage
+        commands:
+          # Each job on Semaphore starts from a clean environment, so we
+          # repeat the required project setup.
+          - checkout
+          - sem-version go 1.21
+          - go install github.com/jandelgado/gcov2lcov@latest
+          - go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
+          - go install golang.org/x/lint/golint@latest
+          - go test -coverprofile=c.out ./...
+          - gcov2lcov -infile=c.out -outfile=coverage.lcov
+          - lcov-to-md
+          - artifact push workflow -d .semaphore/REPORT.md COVERAGE.md
 
   - name: Run tests
     task:
