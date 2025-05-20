@@ -37,7 +37,8 @@ blocks:
             - go install golang.org/x/lint/golint@latest
             - go test -coverprofile=c.out ./...
             - gcov2lcov -infile=c.out -outfile=coverage.lcov
-            - lcov-to-md
+            - chmod a+x lcov-to-md
+            - ./lcov-to-md
             - artifact push workflow -d .semaphore/REPORT.md COVERAGE.md
   - name: Run tests
     task:
