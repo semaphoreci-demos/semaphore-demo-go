@@ -63,8 +63,9 @@ blocks:
       jobs:
         - name: Scan
           commands:
+            - SEMAPHORE_GIT_DIR=$PWD
             - checkout
-            - semgrep scan --error --project-root "$PWD"
+            - semgrep scan --error
 after_pipeline:
   task:
     jobs:
