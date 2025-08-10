@@ -64,7 +64,7 @@ blocks:
         - name: Scan
           commands:
             - checkout
-            - semgrep scan --error
+            - semgrep scan --error --project-root "$PWD"
 after_pipeline:
   task:
     jobs:
