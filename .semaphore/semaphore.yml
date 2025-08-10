@@ -57,11 +57,11 @@ blocks:
         - name: Scan
           commands:
             - checkout
-            - '#sudo snap install semgrep'
+            - sudo snap install semgrep
             - '#export PATH=/home/semaphore/.local/bin:$PATH'
             - '#sudo pip install semgrep'
-            - pip install semgrep
-            - 'export PATH=/home/semaphore/.local/bin:$PATH'
+            - '#pip install semgrep'
+            - '#export PATH=/home/semaphore/.local/bin:$PATH'
             - semgrep scan --error
 after_pipeline:
   task:
