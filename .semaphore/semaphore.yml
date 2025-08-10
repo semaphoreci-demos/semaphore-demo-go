@@ -57,7 +57,7 @@ blocks:
         - name: Scan
           commands:
             - checkout
-            - pip install semgrep
+            - sudo snap install semgrep
             - semgrep scan --error
 after_pipeline:
   task:
