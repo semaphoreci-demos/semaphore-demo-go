@@ -57,12 +57,13 @@ blocks:
         - name: Scan
           commands:
             - checkout
-            - sudo snap install semgrep
+            - '#sudo snap install semgrep'
             - '#export PATH=/home/semaphore/.local/bin:$PATH'
             - '#sudo pip install semgrep'
-            - '#pip install semgrep'
-            - '#export PATH=/home/semaphore/.local/bin:$PATH'
-            - semgrep scan --error
+            - 'export PATH=/home/semaphore/.local/bin:$PATH'
+            - pip install semgrep
+            - semgrep scan --error --junit-xml --output=report.xml
+            - '[[ -f report.xml ]] && test-results publish report.xml'
 after_pipeline:
   task:
     jobs:
