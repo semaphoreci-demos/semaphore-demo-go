@@ -69,8 +69,9 @@ blocks:
             - checkout
             - 'export PATH=$HOME/.local/bin:$PATH'
             - pip install semgrep
-            - semgrep login
             - semgrep ci
+      secrets:
+        - name: semgrep-tomfern
 after_pipeline:
   task:
     jobs:
