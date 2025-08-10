@@ -54,7 +54,7 @@ blocks:
     dependencies: []
     task:
       jobs:
-        - name: Scan
+        - name: CE
           commands:
             - checkout
             - '#sudo snap install semgrep'
@@ -64,10 +64,17 @@ blocks:
             - pip install semgrep
             - semgrep scan --junit-xml --output=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
-        - name: CI
+        - name: Full Scan
           commands:
             - checkout
             - 'export PATH=$HOME/.local/bin:$PATH'
+            - pip install semgrep
+            - semgrep ci
+        - name: Diff Scan
+          commands:
+            - checkout
+            - 'export PATH=$HOME/.local/bin:$PATH'
+            - export SEMGREP_BASELINE_REF=master
             - pip install semgrep
             - semgrep ci
       secrets:
