@@ -59,7 +59,9 @@ blocks:
             - checkout
             - '#sudo snap install semgrep'
             - '#export PATH=/home/semaphore/.local/bin:$PATH'
-            - sudo pip install semgrep
+            - '#sudo pip install semgrep'
+            - pip install semgrep
+            - 'export PATH=/home/semaphore/.local/bin:$PATH'
             - semgrep scan --error
 after_pipeline:
   task:
