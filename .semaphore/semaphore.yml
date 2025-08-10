@@ -53,19 +53,11 @@ blocks:
   - name: Semgrep
     dependencies: []
     task:
-      agent:
-        machine:
-          type: f1-standard-2
-          os_image: ubuntu2004
-        containers:
-          - name: main
-            image: 'semgrep/semgrep:latest'
       jobs:
         - name: Scan
           commands:
             - checkout
-            - mv * .* ..
-            - cd ..
+            - pip install semgrep
             - semgrep scan --error
 after_pipeline:
   task:
