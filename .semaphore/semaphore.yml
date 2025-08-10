@@ -73,6 +73,9 @@ blocks:
         - name: Diff Scan
           commands:
             - checkout
+            - git fetch --unshallow
+            - 'git config remote.origin.fetch ''+refs/heads/*:refs/remotes/origin/*'''
+            - git fetch --all
             - 'export PATH=$HOME/.local/bin:$PATH'
             - export SEMGREP_BASELINE_REF=master
             - pip install semgrep
