@@ -77,7 +77,9 @@ blocks:
             - 'git config remote.origin.fetch ''+refs/heads/*:refs/remotes/origin/*'''
             - git fetch --all
             - 'export PATH=$HOME/.local/bin:$PATH'
-            - export SEMGREP_BASELINE_REF=master
+            - '#export SEMGREP_BASELINE_REF=master'
+            - export SEMGREP_BRANCH=$SEMAPHORE_GIT_BRANCH
+            - export SEMGREP_BASELINE_COMMIT=$SEMAPHORE_GIT_SHA
             - pip install semgrep
             - semgrep ci
       secrets:
