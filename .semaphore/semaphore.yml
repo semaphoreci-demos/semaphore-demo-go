@@ -1,5 +1,5 @@
 version: v1.0
-name: Semaphore Semgrep Example
+name: Semaphore Semgrep CE Example
 agent:
   machine:
     type: f1-standard-2
@@ -8,20 +8,18 @@ blocks:
   - name: Semgrep
     task:
       jobs:
-        # Job performing a full scan
-        - name: Semgrep Full Scan
+        # Job performing a full scan using Semgrep CE
+        - name: Semgrep CE Scan
           commands:
             - checkout
             - sudo pip install semgrep
-            - semgrep ci
-        # Job performing a diff scan for PR/branches
-        - name: Semgrep Diff Scan
-          commands:
-            - checkout
-            - export SEMGREP_BRANCH=$SEMAPHORE_GIT_BRANCH
-            - export SEMGREP_BASELINE_COMMIT=$SEMAPHORE_GIT_SHA
-            - sudo pip install semgrep
-            - semgrep ci
-      # import a secret named 'semgrep' with the SEMGREP_APP_TOKEN
-      secrets:
-        - name: semgrep-tomfern
+            # Save report using JUnit to present results in the test dashboard
+            - semgrep scan --junit-xml --output=report.xml
+            - '[[ -f report.xml ]] && test-results publish report.xml'
+after_pipeline:
+  task:
+    jobs:
+      - name: Publish Results
+        commands:
+          - test-results gen-pipeline-report
+
