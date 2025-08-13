@@ -67,7 +67,6 @@ blocks:
         - name: Full Scan
           commands:
             - checkout
-            - '#export PATH=$HOME/.local/bin:$PATH'
             - sudo pip install semgrep
             - semgrep ci
         - name: Diff Scan
@@ -84,6 +83,13 @@ blocks:
             - semgrep ci
       secrets:
         - name: semgrep-tomfern
+      agent:
+        machine:
+          type: f1-standard-2
+          os_image: ubuntu2004
+        containers:
+          - name: main
+            image: 'semaphoreci/ubuntu:22.04'
 after_pipeline:
   task:
     jobs:
