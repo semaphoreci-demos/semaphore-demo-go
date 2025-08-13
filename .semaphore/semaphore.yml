@@ -60,15 +60,15 @@ blocks:
             - '#sudo snap install semgrep'
             - '#export PATH=/home/semaphore/.local/bin:$PATH'
             - '#sudo pip install semgrep'
-            - 'export PATH=$HOME/.local/bin:$PATH'
-            - pip install semgrep
+            - '#export PATH=$HOME/.local/bin:$PATH'
+            - sudo pip install semgrep
             - semgrep scan --junit-xml --output=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
         - name: Full Scan
           commands:
             - checkout
-            - 'export PATH=$HOME/.local/bin:$PATH'
-            - pip install semgrep
+            - '#export PATH=$HOME/.local/bin:$PATH'
+            - sudo pip install semgrep
             - semgrep ci
         - name: Diff Scan
           commands:
@@ -76,11 +76,11 @@ blocks:
             - '#git fetch --unshallow'
             - '#git config remote.origin.fetch ''+refs/heads/*:refs/remotes/origin/*'''
             - '#git fetch --all'
-            - 'export PATH=$HOME/.local/bin:$PATH'
+            - '#export PATH=$HOME/.local/bin:$PATH'
             - '#export SEMGREP_BASELINE_REF=master'
             - export SEMGREP_BRANCH=$SEMAPHORE_GIT_BRANCH
             - export SEMGREP_BASELINE_COMMIT=$SEMAPHORE_GIT_SHA
-            - pip install semgrep
+            - sudo pip install semgrep
             - semgrep ci
       secrets:
         - name: semgrep-tomfern
