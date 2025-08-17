@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Generate a random 0 or 1
+result=$((RANDOM % 2))
+
+if [ "$result" -eq 0 ]; then
+  test-results publish pass.xml
+else
+  test-results publish fail.xml
+fi
+
+# Exit with that code
+exit $result

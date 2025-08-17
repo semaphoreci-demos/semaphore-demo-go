@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func createTable() {
@@ -144,4 +146,12 @@ func Test_record(t *testing.T) {
 		t.Errorf("Wrong server response!")
 	}
 	dropTable()
+}
+
+func TestRandomFlake(t *testing.T) {
+	t.Parallel()
+	rand.Seed(time.Now().UnixNano()) // different each run
+	if rand.Intn(5) == 0 {           // ~20% chance
+		t.Fatalf("flaked: unlucky roll")
+	}
 }

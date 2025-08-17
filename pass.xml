@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="example" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2025-08-17T00:00:00Z">
+  <properties>
+    <property name="go.version" value="go1.22"/>
+    <property name="package" value="example"/>
+  </properties>
+  <testcase classname="example" name="TestHello" time="0.001"/>
+</testsuite>
+
