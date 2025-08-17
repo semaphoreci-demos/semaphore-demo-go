@@ -11,7 +11,7 @@ blocks:
         - name: go get & build
           commands:
             - checkout
-            - sem-version go 1.19
+            - sem-version go 1.21
             - go get
             - go build -o ./bin/main
             - cache store $(checksum main.go) bin
@@ -21,14 +21,14 @@ blocks:
         - name: gofmt
           commands:
             - checkout
-            - sem-version go 1.19
+            - sem-version go 1.21
             - gofmt main.go | diff --ignore-tab-expansion main.go -
   - name: Run tests
     task:
       prologue:
         commands:
           - checkout
-          - sem-version go 1.19
+          - sem-version go 1.21
       jobs:
         - name: go test
           commands:
@@ -50,7 +50,6 @@ blocks:
       jobs:
         - name: Semgrep CE Scan
           commands:
-            - checkout
             - sudo pip install semgrep
             - semgrep scan --junit-xml --output=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
@@ -64,17 +63,10 @@ blocks:
             - gcov2lcov -infile=c.out -outfile=coverage.lcov
             - scripts/lcov-to-md
             - artifact push workflow -d .semaphore/REPORT.md COVERAGE.md
-
-  - name: Unit tests
-    task:
-      jobs:
-        - name: Unit tests
-          commands:
-            - checkout
-            - cache restore
-            - go mod download
-            - cache store
-            - go test ./...
+      prologue:
+        commands:
+          - checkout
+          - sem-version go 1.21
 after_pipeline:
   task:
     jobs:
