@@ -36,7 +36,7 @@ To run the tests on you machine:
 
 ## License
 
-Copyright (c) 2024 Semaphore Technologies
+Copyright (c) 2025 Semaphore Technologies
 
 Distributed under the MIT License. See the file LICENSE.
 
