@@ -19,8 +19,8 @@ You can extend the pipeline with deployment by implementing a [promotion][promot
 The project has been tested with Go 1.21. After cloning the repository:
 
 ```bash
-$ go get
-$ go build -o ./bin/main
+go get
+go build -o ./bin/main
 ```
 
 ### Testing locally
@@ -28,7 +28,7 @@ $ go build -o ./bin/main
 To run the tests on you machine:
 
 1. Install `gotestsum`: `go install gotest.tools/gotestsum@latest`
-2. Start a test PostgreSQL instance. The easiest way is with Docker: 
+2. Start a test PostgreSQL instance. The easiest way is with Docker:
     `docker run --rm -d --name test-instance -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432 postgres`
 3. Create a test table: `psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE s2"`
 4. Run the tests with: `gotestsum`
