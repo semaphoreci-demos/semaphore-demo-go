@@ -44,7 +44,7 @@ blocks:
       epilogue:
         always:
           commands:
-            - test-results publish junit.xml
+            - '[[ -f junit.xml ]] && test-results publish junit.xml'
   - name: Static Analysis
     task:
       jobs:
