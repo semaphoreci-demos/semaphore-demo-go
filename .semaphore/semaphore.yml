@@ -48,12 +48,10 @@ blocks:
   - name: Static Analysis
     task:
       jobs:
-        # Job performing a full scan using Semgrep CE
         - name: Semgrep CE Scan
           commands:
             - checkout
             - sudo pip install semgrep
-            # Save report using JUnit to present results in the test dashboard
             - semgrep scan --junit-xml --output=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
         - name: Coverage report
@@ -67,6 +65,16 @@ blocks:
             - scripts/lcov-to-md
             - artifact push workflow -d .semaphore/REPORT.md COVERAGE.md
 
+  - name: Unit tests
+    task:
+      jobs:
+        - name: Unit tests
+          commands:
+            - checkout
+            - cache restore
+            - go mod download
+            - cache store
+            - go test ./...
 after_pipeline:
   task:
     jobs:
