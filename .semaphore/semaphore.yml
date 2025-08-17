@@ -56,6 +56,7 @@ blocks:
         - name: Coverage report
           commands:
             - cache restore $(checksum main.go)
+            - ./bin/main 8001 &
             - go install github.com/jandelgado/gcov2lcov@latest
             - go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
             - go install golang.org/x/lint/golint@latest
