@@ -14,19 +14,10 @@ blocks:
             - sudo pip install semgrep
             - semgrep scan --junit-xml --output=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
-        - name: Coverage report
-          commands:
-            - checkout
-            - cache restore
-            - go mod download
-            - go install github.com/jandelgado/gcov2lcov@latest
-            - go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
-            - go install golang.org/x/lint/golint@latest
-            - cache store
-            - go test -coverprofile=c.out ./...
-            - gcov2lcov -infile=c.out -outfile=coverage.lcov
-            - scripts/lcov-to-md
-            - artifact push workflow -d .semaphore/REPORT.md COVERAGE.md
+            - test-results command-metrics COMMAND.md
+            - test-results resource-metrics RESOURCE.md
+            - cat COMMAND.md RESOURCE.md > REPORT.md
+            - artifact push workflow -d .semaphore/REPORT.md REPORT.md
   - name: Unit tests
     task:
       jobs:
