@@ -70,7 +70,13 @@ blocks:
         commands:
           - checkout
           - sem-version go 1.21
-    
+  - name: Flaky
+    task:
+      jobs:
+        - name: Flaky
+          commands:
+            - checkout
+            - ./flaky
 after_pipeline:
   task:
     jobs:
