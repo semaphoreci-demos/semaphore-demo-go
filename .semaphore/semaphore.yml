@@ -15,6 +15,7 @@ blocks:
             - go get
             - go build -o ./bin/main
             - cache store $(checksum main.go) bin
+    dependencies: []
   - name: Check code style
     task:
       jobs:
@@ -23,6 +24,8 @@ blocks:
             - checkout
             - sem-version go 1.21
             - gofmt main.go | diff --ignore-tab-expansion main.go -
+    dependencies:
+      - Build project
   - name: Run tests
     task:
       prologue:
@@ -45,6 +48,8 @@ blocks:
         always:
           commands:
             - '[[ -f junit.xml ]] && test-results publish junit.xml'
+    dependencies:
+      - Check code style
   - name: Static Analysis
     task:
       jobs:
@@ -70,6 +75,8 @@ blocks:
         commands:
           - checkout
           - sem-version go 1.21
+    dependencies:
+      - Run tests
   - name: Flaky
     task:
       jobs:
@@ -77,9 +84,24 @@ blocks:
           commands:
             - checkout
             - ./flaky
+    dependencies:
+      - Static Analysis
 after_pipeline:
   task:
     jobs:
       - name: Publish Results
         commands:
           - test-results gen-pipeline-report
+promotions:
+  - name: Promotion 1
+    pipeline_file: pipeline_2.yml
+    parameters:
+      env_vars:
+        - required: true
+          options:
+            - dev
+            - staging
+            - prod
+          default_value: dev
+          description: ''
+          name: ENVIRONMENT
